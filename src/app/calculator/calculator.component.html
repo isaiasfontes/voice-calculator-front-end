@@ -1,13 +1,14 @@
 <div class="calculator">
     <h2>Calculadora Virtual</h2>
     <div class="calculator-body">
-        <mat-form-field class="calc-virtual-full-width">
+      <!-- 
+      <mat-form-field class="calc-virtual-full-width">
             <div class="display">
               <input matInput [(ngModel)]="inputValue" placeholder="Entre com a Expressão" readonly>
             </div>
           </mat-form-field>
-
-      <!--<input type="text" [(ngModel)]="inputValue" placeholder="Entre com a Expressão" readonly>-->
+        -->
+      <input type="text" [(ngModel)]="inputValue" placeholder="Entre com a Expressão" readonly >
       <div class="keypad">
         <div class="row">
           <button (click)="appendValue('7')">7</button>
@@ -34,12 +35,12 @@
           <button (click)="appendValue('+')">+</button>
         </div>
         <div class="row">
-            <button (click)="calculate()">Confirmar</button>
+          <!--  <button (click)="calculate()">Confirmar</button> -->
           <button class="clear" (click)="clear()">Limpar</button>
         </div>
       </div>
       <div class="result">
-        Result: {{ result }}
+        Resultado: {{ result }}
       </div>
     </div>
   </div>
