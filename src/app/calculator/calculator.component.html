@@ -1,0 +1,48 @@
+<div class="calculator">
+    <h2>Calculadora Virtual</h2>
+    <div class="calculator-body">
+        <mat-form-field class="calc-virtual-full-width">
+            <div class="display">
+              <input matInput [(ngModel)]="inputValue" placeholder="Entre com a Expressão" readonly>
+            </div>
+          </mat-form-field>
+
+      <!--<input type="text" [(ngModel)]="inputValue" placeholder="Entre com a Expressão" readonly>-->
+      <div class="keypad">
+        <div class="row">
+          <button (click)="appendValue('7')">7</button>
+          <button (click)="appendValue('8')">8</button>
+          <button (click)="appendValue('9')">9</button>
+          <button (click)="appendValue('/')">/</button>
+        </div>
+        <div class="row">
+          <button (click)="appendValue('4')">4</button>
+          <button (click)="appendValue('5')">5</button>
+          <button (click)="appendValue('6')">6</button>
+          <button (click)="appendValue('*')">*</button>
+        </div>
+        <div class="row">
+          <button (click)="appendValue('1')">1</button>
+          <button (click)="appendValue('2')">2</button>
+          <button (click)="appendValue('3')">3</button>
+          <button (click)="appendValue('-')">-</button>
+        </div>
+        <div class="row">
+          <button (click)="appendValue('0')">0</button>
+          <button (click)="appendValue('.')">.</button>
+          <button (click)="calculate()">=</button>
+          <button (click)="appendValue('+')">+</button>
+        </div>
+        <div class="row">
+            <button (click)="calculate()">Confirmar</button>
+          <button class="clear" (click)="clear()">Limpar</button>
+        </div>
+      </div>
+      <div class="result">
+        Result: {{ result }}
+      </div>
+    </div>
+  </div>
+
+
+  
