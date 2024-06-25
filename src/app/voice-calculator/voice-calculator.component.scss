@@ -1,0 +1,27 @@
+mat-card {
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.display {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+}
+
+button {
+  margin-top: 20px;
+  // centralize the button
+  display: block;
+  margin: 0 auto;
+}
+
+centerScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

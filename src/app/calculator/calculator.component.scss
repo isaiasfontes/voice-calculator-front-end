@@ -1,0 +1,93 @@
+/* Estilo base para a calculadora */
+.calculator {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background: #f4f4f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Título da calculadora */
+  .calculator h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Corpo da calculadora */
+  .calculator-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Campo de entrada */
+  .calculator-body input {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background: #fff;
+    transition: border-color 0.3s ease;
+  }
+  
+  .calculator-body input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Teclado */
+  .keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  
+  .keypad .row {
+    display: contents;
+  }
+  
+  /* Estilo dos botões */
+  .keypad button {
+    padding: 15px;
+    font-size: 18px;
+    color: #333;
+    background: linear-gradient(145deg, #e6e6e6, #ffffff);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px #d1d1d1, -5px -5px 10px #ffffff;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .keypad button:active {
+    background: #d1d1d1;
+    box-shadow: inset 5px 5px 10px #bababa, inset -5px -5px 10px #ffffff;
+  }
+  
+  /* Botão Clear */
+  .keypad .clear {
+    grid-column: span 4;
+    color: #fff;
+    background: linear-gradient(145deg, #ff7676, #ff4b4b);
+    box-shadow: 5px 5px 10px #d65454, -5px -5px 10px #ff9696;
+  }
+  
+  .keypad .clear:active {
+    background: #ff4b4b;
+    box-shadow: inset 5px 5px 10px #d65454, inset -5px -5px 10px #ff9696;
+  }
+  
+  /* Resultado */
+  .result {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #333;
+  }
+  
+

@@ -1,0 +1,12 @@
+<div class="centerScreen">
+  <mat-card appearance="outlined">
+    <mat-card-content>Calculadora por Voz</mat-card-content>
+
+    <mat-card class="display">{{ transcription }}</mat-card>
+    <mat-card class="display">{{ result }}</mat-card>
+
+    <button mat-fab color="primary" (click)="toggleListening()">
+      <mat-icon>{{ isRecording ? 'stop' : 'mic' }}</mat-icon>
+    </button>
+  </mat-card>
+</div>
