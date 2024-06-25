@@ -1,25 +1,27 @@
-.calculator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #fafafa;
-  font-family: Roboto, Arial, sans-serif;
+mat-card {
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
 }
 
 .display {
-  font-size: 2.5em;
-  margin-bottom: 20px;
+  margin: 10px 0;
   padding: 10px;
-  width: 300px;
-  text-align: right;
-  background-color: #f0f5f3;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
 }
 
 button {
   margin-top: 20px;
+  // centralize the button
+  display: block;
+  margin: 0 auto;
 }
 
-
-
+centerScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
