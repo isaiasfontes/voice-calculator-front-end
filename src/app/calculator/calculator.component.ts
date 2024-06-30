@@ -1,7 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-calculator',
@@ -10,53 +9,39 @@ import { Observable } from 'rxjs';
 })
 export class CalculatorComponent {
   inputValue: string = '';
-  result: number | string = '';
+  result: string = '';
 
   private url = 'http://localhost:8000/process_equation';
 
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   appendValue(value: string) {
     this.inputValue += value;
   }
-  constructor(private http: HttpClient) {}
 
-  calculate() {
-   
+  async calculate(): Promise<void> {
     const headers = new HttpHeaders({
       'Accept': 'application/json'
     });
 
+    if (this.inputValue == '')
+      return;
+
     const formData = new FormData();
     formData.append('equation', this.inputValue);
 
-
-    this.http.post<{ result: string }>(this.url, formData, { headers }).subscribe(
-      (response: any) => {
-        this.inputValue = '0';
-        this.result = response.result;
-      },
-      (error : any) => {
-        this.inputValue = '0';
-        this.result = error.message;
-        console.error(error);
+    try {
+      const response = await this.http.post<{ result: string }>(this.url, formData, { headers }).toPromise();
+      if(response){
+        this.result = response.result;  // Update result with API response
+        console.log(this.result);
+        this.cdr.detectChanges();  // Manually trigger change detection
       }
-    );
-
-    // this.evaluateExpression( this.inputValue.toString()).subscribe(
-    //   (response: any) => {
-    //     console.log('Expressão enviada com sucesso', response.message);
-    //     this.result = response.result;  // Ajuste conforme a estrutura da resposta da API
-    //   },
-    //   (error : any )=> {
-    //     console.error('Erro ao enviar Expressão', error);
-    //     console.error('Erro: ', error);
-    //     console.error('Status: ', error.status );
-    //     console.error('Message Erro: ', error.message );
-    //     console.error('Details Erro: ', error.error.detail );
-    //     this.result = error.message;
-    //   }
-    // );
-
+    } catch (error) {
+      console.error('Error calculating equation:', error);
+      this.result = 'Error';  // Handle error case
+      this.cdr.detectChanges();  // Manually trigger change detection
+    }
   }
 
   clear() {
@@ -65,12 +50,12 @@ export class CalculatorComponent {
   }
 
   @HostListener('window:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
+  async handleKeyboardEvent(event: KeyboardEvent) {
     const allowedKeys = '0123456789/*-+.';
     if (allowedKeys.includes(event.key)) {
       this.appendValue(event.key);
     } else if (event.key === 'Enter') {
-      this.calculate();
+      await this.calculate()
     } else if (event.key === 'Backspace') {
       this.inputValue = this.inputValue.slice(0, -1);
     }

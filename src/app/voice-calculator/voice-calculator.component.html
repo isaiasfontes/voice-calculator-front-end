@@ -5,35 +5,12 @@
   <nb-layout-column>
 
     <mat-form-field class="full-width">
-      <input matInput placeholder="Expressão" [(ngModel)]="expression">
+      <input matInput placeholder="Expressão" [(ngModel)]="expression" readonly>
     </mat-form-field>
     <div *ngIf="apiResponse" class="response">{{ apiResponse }}</div>
-
-    <!-- <input nbInput></input> -->
-    <!-- <mat-card class="display">{{ transcription }}</mat-card>   -->
-    <!-- <mat-card class="display">{{ result }}</mat-card> -->
-
 
     <button mat-fab color="primary" (click)="startListening()">
       <mat-icon>{{ isRecording ? 'stop' : 'mic' }}</mat-icon>
     </button> 
 
   </nb-layout-column>
- 
-
-<!--
-<div class="centerScreen">
-  <mat-card appearance="outlined">
-    <mat-card-content>Calculadora por Voz</mat-card-content>
-
-    <mat-card class="display">{{ transcription }}</mat-card>
-    <mat-card class="display">{{ result }}</mat-card>
-
-    <button mat-fab color="primary" (click)="toggleListening()">
-      <mat-icon>{{ isRecording ? 'stop' : 'mic' }}</mat-icon>
-    </button>
-  </mat-card>
-</div>
-
--->
- 
