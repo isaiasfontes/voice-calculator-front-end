@@ -1,28 +1,70 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-voice-calculator',
   templateUrl: './voice-calculator.component.html',
   styleUrls: ['./voice-calculator.component.scss']
 })
-export class VoiceCalculatorComponent {
+export class VoiceCalculatorComponent implements OnInit {
+  public expression: string = '';
   public transcription: string = '';
-  public result: string = '';
+  public result: string = '0';
+  public apiResponse: string = '';
   public isRecording: boolean = false;
-  public mediaRecorder: MediaRecorder | undefined;
+  private recognition: any;
+  private mediaRecorder: any;
+  private audioChunks: any[] = [];
 
   private chunks: any[] = [];
   private audioContext: AudioContext = new AudioContext({ sampleRate: 16000 });
+  
+  private url = 'http://localhost:8000/process_audio';
 
-  constructor() {
+  constructor(private zone: NgZone, private http: HttpClient) {}
+
+  
+  ngOnInit(): void {
+    const { webkitSpeechRecognition }: IWindow = window as any;
+    this.recognition = new webkitSpeechRecognition();
+    this.recognition.lang = 'pt-BR'; // Definindo o idioma para português do Brasil
+    this.recognition.continuous = false;
+    this.recognition.interimResults = false;
+
+    this.recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript.trim();
+      this.zone.run(() => {
+      this.expression = transcript;
+      this.processVoiceCommand(transcript);
+      
+      });
+    };
+
+    this.recognition.onerror = (event: any) => {
+      console.error('Erro no reconhecimento de voz', event);
+    };
+
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => {
+        this.mediaRecorder = new MediaRecorder(stream);
+        this.mediaRecorder.ondataavailable = (event: any) => {
+          this.audioChunks.push(event.data);
+        };
+        // this.mediaRecorder.onstop = async () => {
+        //   // this.sendAudio();
+        //   this.startListening();
+        // };
+      })
+      .catch(error => console.error('Erro ao acessar microfone', error));
   }
 
-
-  async toggleListening() {
+ async startListening() {
     if (this.isRecording) {
-      this.mediaRecorder!.stop();
-      this.isRecording = false;
+      this.stopListening();
     } else {
+      this.audioChunks = [];
+      
+
       const audioConstraints = {
         audio: {
           autoGainControl: false,
@@ -42,6 +84,11 @@ export class VoiceCalculatorComponent {
 
       this.mediaRecorder = new MediaRecorder(stream, mediaRecorderOptions);
       this.mediaRecorder.start();
+      this.recognition.start();
+      this.isRecording = true;
+
+      this.mediaRecorder = new MediaRecorder(stream, mediaRecorderOptions);
+      this.mediaRecorder.start();
       this.isRecording = true;
 
       this.mediaRecorder.ondataavailable = (event: any) => this.chunks.push(event.data);
@@ -53,10 +100,80 @@ export class VoiceCalculatorComponent {
         this.chunks = [];
 
         // Download the audio file
-        this.downloadBlob(wavBlob, 'audio.wav');
+        //this.downloadBlob(wavBlob, 'audio.wav');
+        this.sendAudioPost(wavBlob);
+
       };
+
     }
   }
+
+   stopListening() {
+    this.recognition.stop();
+    this.mediaRecorder.stop();
+    this.isRecording = false;
+      
+  }
+
+  processVoiceCommand(command: string) {
+    try {
+      const sanitizedCommand = command.replace(/mais/g, '+')
+                                      .replace(/menos/g, '-')
+                                      .replace(/vezes/g, '*')
+                                      .replace(/dividido por/g, '/');
+      //this.result = eval(sanitizedCommand);
+      
+
+    } catch (e) {
+      this.result = 'Erro:'  + console.error("Não foi possivel enviar o áudio", e);
+    }
+  }
+
+  sendAudio() {
+     
+    const audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
+    const formData = new FormData();
+    formData.append('audio', audioBlob, 'audio.wav');
+
+    // Download the audio file
+    //this.downloadBlob(audioBlob, 'audio.wav');
+
+    this.http.post(this.url, audioBlob).subscribe(
+      (response: any) => {
+        console.log('Áudio enviado com sucesso', response);
+        // this.apiResponse = response.message;  // Ajuste conforme a estrutura da resposta da API
+      },
+      error => {
+        console.error('Erro ao enviar áudio', error);
+        this.apiResponse = 'Erro ao enviar áudio';
+      }
+    );
+  }
+
+  private sendAudioPost(blob: Blob) {
+
+   const audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
+    const formData = new FormData();
+    
+
+    formData.append('audio', audioBlob );
+
+
+    this.http.post<{ result: string }>(this.url, formData ).subscribe(
+      (response: any) => {
+        console.log('Áudio enviado com sucesso', response);
+        this.apiResponse =  response.message; // Ajuste conforme a estrutura da resposta da API
+      },
+      (error: any)  => {
+        console.error('Erro: ', error);
+        console.error('Status: ', error.status );
+        console.error('Message Erro: ', error.message );
+        console.error('Details Erro: ', error.error.detail );
+        this.apiResponse =  error.message ; 
+      }
+    );
+
+      }
 
   private downloadBlob(blob: Blob, filename: string) {
     const link = document.createElement('a');
@@ -67,6 +184,7 @@ export class VoiceCalculatorComponent {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+
   }
 
   calculateResult(transcription: string) {
@@ -126,5 +244,8 @@ export class VoiceCalculatorComponent {
       view.setUint32(pos, data, true);
       pos += 4;
     }
-  }
+}
+}
+interface IWindow extends Window {
+  webkitSpeechRecognition: any;
 }

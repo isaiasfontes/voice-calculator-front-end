@@ -16,12 +16,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { NbInputModule, NbThemeModule } from '@nebular/theme';
+
+
+import { NbMenuModule , NbSidebarModule, NbLayoutModule, NbButtonModule } from '@nebular/theme';
+
+import { HttpClientModule } from '@angular/common/http';
+
  
 @NgModule({
   declarations: [
     AppComponent,
     VoiceCalculatorComponent,
-    CalculatorComponent
+    CalculatorComponent 
   ],
   imports: [
     routing,
@@ -35,7 +42,15 @@ import { MatDividerModule } from '@angular/material/divider';
     MatFormFieldModule,
     MatDividerModule,
     MatButtonModule, 
-    MatIconModule
+    MatIconModule,
+    NbLayoutModule,
+    NbSidebarModule.forRoot(), // NbSidebarModule.forRoot(), //if this is your app.module
+    NbMenuModule.forRoot(),
+    NbSidebarModule.forRoot(),
+    NbButtonModule,
+    NbThemeModule.forRoot({ name: 'default' }),
+    NbInputModule,
+    HttpClientModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

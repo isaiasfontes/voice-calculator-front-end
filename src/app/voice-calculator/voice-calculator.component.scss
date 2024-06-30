@@ -25,3 +25,42 @@ centerScreen {
   align-items: center;
   height: 100vh;
 }
+
+
+.calculator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #fafafa;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+mat-card {
+  width: 300px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.display {
+  font-size: 2.5em;
+  margin-top: 20px;
+  padding: 10px;
+  text-align: right;
+  background-color: #fff;
+  width: 100%;
+}
+
+ 
+.response {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #00796b;
+}

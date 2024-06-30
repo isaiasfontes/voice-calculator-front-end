@@ -1,14 +1,18 @@
- <!-- <app-voice-calculator></app-voice-calculator>   -->
+<nb-layout>
+  <nb-layout-header fixed>
+    <!-- Seu cabeçalho -->
+     Calculadora OpenAI
+  </nb-layout-header>
+
+  <nb-sidebar>
+    <nb-menu [items]="menuItems"></nb-menu>
+  </nb-sidebar>
+
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+</nb-layout>
+
+
  
-<nav>
-    <ul>
-      <!-- <li><a routerLink="/calculator" >Calculadora</a></li> -->
-      <!-- <li><a routerLink="/voice-calculator">Calculadora por Voz</a></li>-->
-      <!-- Adicione mais links conforme necessário -->
-      <a  routerLink="/calculator" routerLinkActive="selected">Calculadora Virtual</a><br>
-      <a  routerLink="/voice-calculator" routerLinkActive="selected">Calculadora por Voz</a><br>
-       
-    </ul>
-  </nav>
-  <hr>
-  <router-outlet></router-outlet> 
+
