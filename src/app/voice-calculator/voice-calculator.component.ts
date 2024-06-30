@@ -15,21 +15,21 @@ export class VoiceCalculatorComponent implements OnInit {
 
   private chunks: any[] = [];
   private audioContext: AudioContext = new AudioContext({ sampleRate: 16000 });
-  
+
   private url = 'http://localhost:8000/process_audio';
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
-  
+
   ngOnInit(): void {
   }
 
- async startListening() {
+  async startListening() {
     if (this.isRecording) {
       this.stopListening();
     } else {
       this.audioChunks = [];
-      
+
 
       const audioConstraints = {
         audio: {
@@ -63,7 +63,7 @@ export class VoiceCalculatorComponent implements OnInit {
 
         // Download the audio file
         //this.downloadBlob(wavBlob, 'audio.wav');
-        
+
         this.sendWavFile(wavBlob);
 
       };
@@ -72,17 +72,17 @@ export class VoiceCalculatorComponent implements OnInit {
   }
 
   stopListening() {
-    if(this.isRecording){
+    if (this.isRecording) {
       this.isRecording = false;
       this.cdr.detectChanges();  // Manually trigger change detection
-      this.mediaRecorder.stop(); 
+      this.mediaRecorder.stop();
     }
   }
 
   private async sendWavFile(blob: Blob) {
     const formData = new FormData();
     formData.append('audio', blob, 'audio.wav');
-  
+
     try {
       const response = await fetch(this.url, {
         method: 'POST',
@@ -91,7 +91,7 @@ export class VoiceCalculatorComponent implements OnInit {
         },
         body: formData
       });
-  
+
       if (response.ok) {
         const result = await response.json();
         const resultado = result.result.split('\n\n') as string[];
@@ -178,8 +178,5 @@ export class VoiceCalculatorComponent implements OnInit {
       view.setUint32(pos, data, true);
       pos += 4;
     }
-}
-}
-interface IWindow extends Window {
-  webkitSpeechRecognition: any;
+  }
 }
