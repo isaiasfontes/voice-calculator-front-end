@@ -35,3 +35,10 @@
     width: 100%;
   }
 
+  nb-card {
+    width: 300px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

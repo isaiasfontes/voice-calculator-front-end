@@ -7,7 +7,7 @@ import { VoiceCalculatorComponent } from './voice-calculator/voice-calculator.co
 
 const routes: Routes = [
 
-  //{ path: '', redirectTo: '/calculator', pathMatch: 'full' },
+  { path: '', redirectTo: '/calculator', pathMatch: 'full' },
   { path: 'calculator', component: CalculatorComponent },
 
   //{ path: '', redirectTo: '/voicecalculator', pathMatch: 'full' },
