@@ -4,9 +4,12 @@
 
   <nb-layout-column>
 
-    <mat-form-field class="full-width">
-      <input matInput placeholder="Expressão" [(ngModel)]="expression" readonly>
+    <mat-form-field class="displayVoice">
+      <input matInput placeholder="Expressão" [(ngModel)]="expression" readonly> 
     </mat-form-field>
+
+    
+    
     <div *ngIf="apiResponse" class="response">{{ apiResponse }}</div>
 
     <button mat-fab color="primary" (click)="startListening()">

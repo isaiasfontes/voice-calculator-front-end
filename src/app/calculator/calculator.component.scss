@@ -90,4 +90,7 @@
     color: #333;
   }
   
-
+  .mat-form-field input {
+    height: 20px;
+    transition: height ease-in-out 400ms;
+}

@@ -12,6 +12,7 @@ export class CalculatorComponent {
   result: string = '';
 
   private url = 'http://localhost:8000/process_equation';
+  private strResult : any[] =  [];
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
@@ -23,7 +24,8 @@ export class CalculatorComponent {
     const headers = new HttpHeaders({
       'Accept': 'application/json'
     });
-
+    
+   
     if (this.inputValue == '')
       return;
 
@@ -33,7 +35,12 @@ export class CalculatorComponent {
     try {
       const response = await this.http.post<{ result: string }>(this.url, formData, { headers }).toPromise();
       if(response){
-        this.result = response.result;  // Update result with API response
+       this.strResult = response.result.split("=",2);
+       this.result = response.result;
+       this.inputValue = this.strResult[1];
+
+       // this.result = response.result;  // Update result with API response
+        //this.inputValue = response.result;
         console.log(this.result);
         this.cdr.detectChanges();  // Manually trigger change detection
       }
