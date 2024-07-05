@@ -1,5 +1,8 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
+// const dotenv = require('dotenv').config({path: 'src/.env'}); ;
+
+import { environment } from './../../../src/environments/environment';
 
 @Component({
   selector: 'app-voice-calculator',
@@ -16,7 +19,9 @@ export class VoiceCalculatorComponent implements OnInit {
   private chunks: any[] = [];
   private audioContext: AudioContext = new AudioContext({ sampleRate: 16000 });
 
-  private url = 'http://localhost:8000/process_audio';
+  // private url = 'http://localhost:8000/process_audio';
+  private url = environment.url_voice_calculator +  '/process_audio';
+
 
   constructor(private cdr: ChangeDetectorRef) { }
 

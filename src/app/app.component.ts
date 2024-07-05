@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { NbMenuItem } from '@nebular/theme';
 
 
@@ -25,6 +26,8 @@ export class AppComponent implements OnInit {
       link: '/voice-calculator', // Ajuste conforme sua rota
     },
     // Adicione outros itens de menu conforme necessário
+
+   
   ];
   
   constructor (

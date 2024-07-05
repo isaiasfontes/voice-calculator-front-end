@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef } from '@angular/core';
+import { environment } from './../../../src/environments/environment';
 
 @Component({
   selector: 'app-calculator',
@@ -11,7 +12,9 @@ export class CalculatorComponent {
   inputValue: string = '';
   result: string = '';
 
-  private url = 'http://localhost:8000/process_equation';
+  // private url = 'http://localhost:8000/process_equation';
+  private url = environment.url_voice_calculator +  '/process_equation';
+
   private strResult : any[] =  [];
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
