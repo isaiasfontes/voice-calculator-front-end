@@ -1,7 +1,8 @@
 import { Component, HostListener } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef } from '@angular/core';
-import { environment } from './../../../src/environments/environment';
+// import { environment } from './../../../src/environments/environment';
+import { environment } from '../../environments/environment';
 
 
 @Component({

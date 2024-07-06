@@ -2,7 +2,8 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 // const dotenv = require('dotenv').config({path: 'src/.env'}); ;
 
-import { environment } from './../../../src/environments/environment';
+// import { environment } from './../../../src/environments/environment';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-voice-calculator',
